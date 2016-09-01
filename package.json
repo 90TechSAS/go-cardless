@@ -4,7 +4,9 @@
   "description": "Basic NodeJS go cardless SDK",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/**/*.test.js -- -r should -r should-sinon",
+    "standard": "node ./node_modules/.bin/standard",
+    "test": "./node_modules/.bin/mocha -r should -r should-sinon test/**/*.test.js"
   },
   "author": "90Tech SAS <contact@90tech.fr> (https://www.90tech.fr/)",
   "contirubtors": [
@@ -13,6 +15,15 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "request": "^2.74.0"
+    "joi": "9.0.4",
+    "request": "2.74.0"
+  },
+  "devDependencies": {
+    "istanbul": "0.4.5",
+    "mocha": "3.0.2",
+    "should": "11.1.0",
+    "should-sinon": "0.0.5",
+    "sinon": "1.17.5",
+    "standard": "8.0.0"
   }
 }
