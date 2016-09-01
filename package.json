@@ -1,12 +1,16 @@
 {
   "name": "go-cardless",
   "version": "1.0.0",
-  "description": "Basic NodeJS go cardless lib",
+  "description": "Basic NodeJS go cardless SDK",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "90Tech SAS <contact@90tech.fr> (https://www.90tech.fr/)",
+  "contirubtors": [
+    "flogou <florent.gouget@gmail.com>",
+    "Jonathan ARNAULT <contact@jonathanarnault.com>"
+  ],
   "license": "MIT",
   "dependencies": {
     "request": "^2.74.0"
