@@ -4,6 +4,11 @@
 const sinon = require('sinon')
 
 const GoCardless = require('../lib/index.js')
+
+/**
+ * GoCardless request method
+ * @type {function}
+ */
 const req = GoCardless.prototype.request
 
 describe('GoCardless', () => {
@@ -106,7 +111,7 @@ describe('GoCardless', () => {
     })
 
     it('should create a GET request', done => {
-      let spy = sinon.spy(GoCardless.client(), 'request')
+      const spy = sinon.spy(GoCardless.client(), 'request')
 
       GoCardless.client().get({
         url: '/'
@@ -134,7 +139,7 @@ describe('GoCardless', () => {
     })
 
     it('should create a POST request', done => {
-      let spy = sinon.spy(GoCardless.client(), 'request')
+      const spy = sinon.spy(GoCardless.client(), 'request')
 
       GoCardless.client().post({
         url: '/',
@@ -164,7 +169,7 @@ describe('GoCardless', () => {
     })
 
     it('should create a PUT request', done => {
-      let spy = sinon.spy(GoCardless.client(), 'request')
+      const spy = sinon.spy(GoCardless.client(), 'request')
 
       GoCardless.client().put({
         url: '/',
@@ -194,7 +199,7 @@ describe('GoCardless', () => {
     })
 
     it('should create a DELETE request', done => {
-      let spy = sinon.spy(GoCardless.client(), 'request')
+      const spy = sinon.spy(GoCardless.client(), 'request')
 
       GoCardless.client().delete({
         url: '/'
