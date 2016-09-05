@@ -4,9 +4,9 @@
   "description": "Basic NodeJS go cardless SDK",
   "main": "lib/index.js",
   "scripts": {
-    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/*.test.js test/**/*.test.js -- -r should -r should-sinon",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/*.test.js test/**/*.test.js -- -r should -r should-sinon -r ./test/_init.js",
     "standard": "node ./node_modules/.bin/standard",
-    "test": "./node_modules/.bin/mocha -r should -r should-sinon test/*.test.js test/**/*.test.js"
+    "test": "./node_modules/.bin/mocha -r should -r should-sinon -r ./test/_init.js test/*.test.js test/**/*.test.js"
   },
   "author": "90Tech SAS <contact@90tech.fr> (https://www.90tech.fr/)",
   "contirubtors": [

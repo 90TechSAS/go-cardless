@@ -2,10 +2,48 @@
 
 Unofficial SDK for GoCardless API
 
-# Install
+# Installation
 
 ```bash
   npm install 90TechSAS/go-cardless
+```
+
+# Examples
+
+TODO
+
+# Contributing
+
+## Prerequisites
+
+* You have node installed at v4.0.0+ and npm at v2.0.0+.
+* You are familiar with npm.
+* You are familiar with git.
+
+## Test
+
+Create configuration file: test/gocardless.json
+```json
+{
+  "token": "<YOUR TOKEN>",
+  "version": "2015-07-06"
+}
+```
+
+
+Run unit tests :
+```bash
+  npm test
+```
+
+Check code coverage :
+```bash
+  npm run-script coverage
+```
+
+Check standardjs compliance :
+```bash
+  npm run-script standard
 ```
 
 # Disclaimer
