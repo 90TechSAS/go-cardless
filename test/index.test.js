@@ -66,7 +66,7 @@ describe('GoCardless', () => {
       })
     })
 
-    it('should throw an error if no body is provided for POSTand PUT requests', done => {
+    it('should throw an error if no body is provided for POST and PUT requests', done => {
       GoCardless.client().request({
         url: '/',
         method: 'POST'
@@ -76,22 +76,35 @@ describe('GoCardless', () => {
       })
     })
 
-    it('should return the response when request has completed', done => {
+    it('should not throw an error if a body is provided for POST and PUT requests', done => {
+      GoCardless.client().request({
+        url: '/',
+        method: 'POST',
+        json: {}
+      }, (err) => {
+        (err === null).should.be.true()
+        done()
+      })
+    })
+
+    it('should return the response when request has completed', function (done) {
+      this.timeout(5000)
       GoCardless.client().request({
         url: '/customers',
         method: 'GET'
       }, (err, response, body) => {
-        (err === null).should.be.true
+        (err === null).should.be.true()
         response.statusCode.should.be.equal(200)
         done()
       })
     })
 
-    it('should return default to GET request', done => {
+    it('should default to GET request', function (done) {
+      this.timeout(5000)
       GoCardless.client().request({
         url: '/customers'
       }, (err, response, body) => {
-        (err === null).should.be.true
+        (err === null).should.be.true()
         response.request.method.should.be.equal('GET')
         done()
       })

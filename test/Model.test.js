@@ -34,7 +34,9 @@ describe('Model', () => {
     }
 
     GoCardless.prototype.request = function (options, callback) {
-      callback()
+      callback(null, null, {
+        users: []
+      })
     }
   })
 
@@ -49,20 +51,20 @@ describe('Model', () => {
 
   describe('#create()', () => {
     it('should create a model', () => {
-      let User = Model.create('User', '/users', { email: Joi.string().email().required() })
+      let User = Model.create('User', 'users', { email: Joi.string().email().required() })
       User.name.should.be.equal('User')
       User.url.should.be.equal('/users')
     })
 
     it('should register model to GoCardless client', () => {
-      Model.create('Post', '/posts', { content: Joi.string().required() })
+      Model.create('Post', 'posts', { content: Joi.string().required() })
       GoCardless.model('Post').name.should.be.equal('Post')
     })
   })
 
   describe('#validate()', () => {
     beforeEach(() => {
-      Model.create('User', '/users', { email: Joi.string().email().required() })
+      Model.create('User', 'users', { email: Joi.string().email().required() })
     })
 
     it('should return an error if the model is not valid', done => {
@@ -81,7 +83,7 @@ describe('Model', () => {
       const user = new User(data)
 
       user.validate((err) => {
-        (err === null).should.be.true
+        (err === null).should.be.true()
         done()
       })
     })
@@ -89,7 +91,7 @@ describe('Model', () => {
 
   describe('#get()', () => {
     beforeEach(() => {
-      Model.create('User', '/users', { email: Joi.string().email().required() })
+      Model.create('User', 'users', { email: Joi.string().email().required() })
     })
 
     it('should get a model via its ID', done => {
@@ -110,7 +112,7 @@ describe('Model', () => {
 
   describe('#list()', () => {
     beforeEach(() => {
-      Model.create('User', '/users', { email: Joi.string().email().required() })
+      Model.create('User', 'users', { email: Joi.string().email().required() })
     })
 
     it('should get a list of models', done => {
@@ -130,30 +132,9 @@ describe('Model', () => {
     })
   })
 
-  describe('#remove()', () => {
-    beforeEach(() => {
-      Model.create('User', '/users', { email: Joi.string().email().required() })
-    })
-
-    it('should delete a model via its ID', done => {
-      const User = GoCardless.model('User')
-      const spy = sinon.spy(GoCardless.client(), 'request')
-
-      User.remove('US1', () => {
-        spy.should.be.calledOnce()
-        spy.should.be.calledWith({
-          url: '/users/US1',
-          method: 'DELETE'
-        })
-        spy.restore()
-        done()
-      })
-    })
-  })
-
   describe('#save()', () => {
     beforeEach(() => {
-      Model.create('User', '/users', { id: Joi.string(), email: Joi.string().email().required() })
+      Model.create('User', 'users', { id: Joi.string(), email: Joi.string().email().required() })
     })
 
     it('should fail if the model is not valid', done => {
@@ -162,7 +143,7 @@ describe('Model', () => {
       const user = new User(data)
 
       user.save((err) => {
-        (err === null).should.be.false
+        (err === null).should.be.false()
         err.name.should.be.equal('ValidationError')
         done()
       })
@@ -175,12 +156,14 @@ describe('Model', () => {
       const user = new User(data)
 
       user.save((err) => {
-        (err === null).should.be.true
+        (err === null).should.be.true()
         spy.should.be.calledOnce()
         spy.should.be.calledWith({
           url: '/users',
           method: 'POST',
-          json: data
+          json: {
+            users: data
+          }
         })
         spy.restore()
         done()
@@ -194,12 +177,14 @@ describe('Model', () => {
       const user = new User(data)
 
       user.save((err) => {
-        (err === null).should.be.true
+        (err === null).should.be.true()
         spy.should.be.calledOnce()
         spy.should.be.calledWith({
           url: '/users/US1',
           method: 'PUT',
-          json: data
+          json: {
+            users: { email: 'valid@domain.com' }
+          }
         })
         spy.restore()
         done()
