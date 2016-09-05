@@ -1,4 +1,4 @@
-/* global describe it */
+/* global describe it before after */
 'use strict'
 
 const sinon = require('sinon')
@@ -12,7 +12,6 @@ const GoCardless = require('../lib/index.js')
 const req = GoCardless.prototype.request
 
 describe('GoCardless', () => {
-
   describe('#model', () => {
     it('should return an existing model', () => {
       GoCardless.model('Customer').name.should.be.equal('Customer')
@@ -40,13 +39,13 @@ describe('GoCardless', () => {
   describe('#constructor()', () => {
     it('should throw an error if no token are provided', () => {
       (function () {
-      new GoCardless(null, null, true)
+        return new GoCardless(null, null, true)
       }).should.throw('You must specify an API token to create a GoCardless instance')
     })
 
     it('should return the current client if called without arguments', () => {
       (function () {
-        new GoCardless('invalid', null, true)
+        return new GoCardless('invalid', null, true)
       }).should.throw('You must specify GoCardless API version')
     })
 
@@ -115,7 +114,7 @@ describe('GoCardless', () => {
 
       GoCardless.client().get({
         url: '/'
-      }, (err) => {
+      }, () => {
         spy.should.be.calledOnce()
         spy.should.be.calledWith({
           url: '/',
@@ -144,7 +143,7 @@ describe('GoCardless', () => {
       GoCardless.client().post({
         url: '/',
         json: {}
-      }, (err) => {
+      }, () => {
         spy.should.be.calledOnce()
         spy.should.be.calledWith({
           url: '/',
@@ -174,7 +173,7 @@ describe('GoCardless', () => {
       GoCardless.client().put({
         url: '/',
         json: {}
-      }, (err) => {
+      }, () => {
         spy.should.be.calledOnce()
         spy.should.be.calledWith({
           url: '/',
@@ -203,7 +202,7 @@ describe('GoCardless', () => {
 
       GoCardless.client().delete({
         url: '/'
-      }, (err) => {
+      }, () => {
         spy.should.be.calledOnce()
         spy.should.be.calledWith({
           url: '/',

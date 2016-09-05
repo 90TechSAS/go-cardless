@@ -1,4 +1,4 @@
-/* global describe it before after */
+/* global describe it before beforeEach after afterEach */
 'use strict'
 
 const sinon = require('sinon')
@@ -78,7 +78,7 @@ describe('Model', () => {
     it('should return no errors if the model is valid', done => {
       const User = GoCardless.model('User')
       const data = { email: 'valid@domain.com' }
-      const user = new User()
+      const user = new User(data)
 
       user.validate((err) => {
         (err === null).should.be.true
