@@ -67,7 +67,7 @@ describe('GoCardless', () => {
       })
     })
 
-    it('should throw an error if no boby is provided for POSTand PUT requests', done => {
+    it('should throw an error if no body is provided for POSTand PUT requests', done => {
       GoCardless.client().request({
         url: '/',
         method: 'POST'
