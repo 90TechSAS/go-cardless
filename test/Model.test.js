@@ -191,4 +191,44 @@ describe('Model', () => {
       })
     })
   })
+
+  describe('#properties', () => {
+    beforeEach(() => {
+      Model.create('User', 'users', { id:  Joi.string(), email: Joi.string().email().required() })
+    })
+
+    it('should have get accessor', () => {
+      const User = GoCardless.model('User')
+
+      let user = new User({
+        id: '1',
+        email: 'hello@90tech.fr'
+      })
+
+      user.id.should.be.equal('1')
+      user.email.should.be.equal('hello@90tech.fr')
+    })
+
+    it('should have set accessor', () => {
+      const User = GoCardless.model('User')
+
+      let user = new User({
+        id: '1',
+        email: 'hello@90tech.fr'
+      })
+      user.email = 'hello2@90tech.fr'
+      user.email.should.be.equal('hello2@90tech.fr')
+    })
+
+    it('should not allow id update', () => {
+      const User = GoCardless.model('User')
+
+      let user = new User({
+        id: '1',
+        email: 'hello@90tech.fr'
+      })
+      user.id = '2'
+      user.id.should.be.equal('1')
+    })
+  })
 })
