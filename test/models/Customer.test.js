@@ -46,9 +46,9 @@ describe('models.Customer', () => {
   describe('#list()', () => {
     it('should list customers', function (done) {
       this.timeout(5000)
-      Customer.list({}, (err, customers) => {
+      Customer.list({}, (err, res) => {
         (err === null).should.be.true()
-        customers.length.should.be.aboveOrEqual(1)
+        res.results.length.should.be.aboveOrEqual(1)
         done()
       })
     })

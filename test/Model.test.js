@@ -35,6 +35,7 @@ describe('Model', () => {
 
     GoCardless.prototype.request = function (options, callback) {
       callback(null, null, {
+        meta: { cursors: { before: null, after: null }, limit: 50},
         users: []
       })
     }
