@@ -5,7 +5,7 @@ const GoCardless = require('../../lib/index.js')
 const Customer = GoCardless.model('Customer')
 
 const template = {
-  email: 'john.doe@domain.com',
+  email: 'john.doe@90tech.fr',
   given_name: 'John',
   family_name: 'Doe',
   address_line1: 'Champ de Mars',
@@ -37,7 +37,7 @@ describe('models.Customer', () => {
       this.timeout(5000)
       Customer.get(customer.id, (err, cust) => {
         (err === null).should.be.true()
-        cust.email.should.be.equal('john.doe@domain.com')
+        cust.email.should.be.equal('john.doe@90tech.fr')
         done()
       })
     })
@@ -61,7 +61,7 @@ describe('models.Customer', () => {
 
       c.save((err, cust) => {
         (err === null).should.be.true()
-        cust.email.should.be.equal('john.doe@domain.com')
+        cust.email.should.be.equal('john.doe@90tech.fr')
         done()
       })
     })
@@ -70,11 +70,11 @@ describe('models.Customer', () => {
       this.timeout(5000)
       Customer.get(customer.id, (err, c) => {
         (err === null).should.be.true()
-        c.email = 'jane.doe@domain.com'
+        c.email = 'jane.doe@90tech.fr'
 
         c.save((err, cust) => {
           (err === null).should.be.true()
-          cust.email.should.be.equal('jane.doe@domain.com')
+          cust.email.should.be.equal('jane.doe@90tech.fr')
           c.id.should.be.equal(cust.id)
           done()
         })
@@ -98,7 +98,7 @@ describe('models.Customer', () => {
       let customer = new Customer({
         id: 'CU1',
         created_at: new Date(),
-        email: 'hello@domain.com',
+        email: 'hello@90tech.fr',
         given_name: 'John',
         family_name: 'Doe',
         address_line1: 'Champ de Mars',

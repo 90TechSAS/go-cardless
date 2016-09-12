@@ -79,7 +79,7 @@ describe('Model', () => {
 
     it('should return no errors if the model is valid', done => {
       const User = GoCardless.model('User')
-      const data = { email: 'valid@domain.com' }
+      const data = { email: 'valid@90tech.fr' }
       const user = new User(data)
 
       user.validate((err) => {
@@ -152,7 +152,7 @@ describe('Model', () => {
     it('should create a model if it does not have an ID', done => {
       const User = GoCardless.model('User')
       const spy = sinon.spy(GoCardless.client(), 'request')
-      const data = { email: 'valid@domain.com' }
+      const data = { email: 'valid@90tech.fr' }
       const user = new User(data)
 
       user.save((err) => {
@@ -173,7 +173,7 @@ describe('Model', () => {
     it('should update a model if it has an ID', done => {
       const User = GoCardless.model('User')
       const spy = sinon.spy(GoCardless.client(), 'request')
-      const data = { id: 'US1', email: 'valid@domain.com' }
+      const data = { id: 'US1', email: 'valid@90tech.fr' }
       const user = new User(data)
 
       user.save((err) => {
@@ -183,7 +183,7 @@ describe('Model', () => {
           url: '/users/US1',
           method: 'PUT',
           json: {
-            users: { email: 'valid@domain.com' }
+            users: { email: 'valid@90tech.fr' }
           }
         })
         spy.restore()
