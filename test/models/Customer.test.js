@@ -1,9 +1,6 @@
 /* global describe it before */
 'use strict'
 
-const _ = require('lodash')
-const async = require('async')
-
 const GoCardless = require('../../lib/index.js')
 const Customer = GoCardless.model('Customer')
 

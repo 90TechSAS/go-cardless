@@ -194,7 +194,7 @@ describe('Model', () => {
 
   describe('#properties', () => {
     beforeEach(() => {
-      Model.create('User', 'users', { id:  Joi.string(), email: Joi.string().email().required() })
+      Model.create('User', 'users', { id: Joi.string(), email: Joi.string().email().required() })
     })
 
     it('should have get accessor', () => {
