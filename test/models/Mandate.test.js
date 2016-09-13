@@ -1,4 +1,4 @@
-/* global describe it before */
+/* global describe it before beforeEach */
 'use strict'
 
 const GoCardless = require('../../lib/index.js')
@@ -32,7 +32,7 @@ var mandate
 describe('models.Mandate', () => {
   before(function (done) {
     if (!process.env.hasOwnProperty('TEST_PRO_FEATURES')) {
-      return this.skip();
+      return this.skip()
     }
 
     this.timeout(5000)
@@ -82,7 +82,7 @@ describe('models.Mandate', () => {
 
   beforeEach(function () {
     if (!process.env.hasOwnProperty('TEST_PRO_FEATURES')) {
-      this.skip();
+      this.skip()
     }
   })
 
@@ -112,7 +112,7 @@ describe('models.Mandate', () => {
     it('should create a Mandate if it does not have an ID', function (done) {
       this.timeout(5000)
       let m = new Mandate(template)
-      m.save((err, ba) => {
+      m.save((err, m) => {
         (err === null).should.be.true()
         m.reference.should.be.equal('90Tech')
         done()
