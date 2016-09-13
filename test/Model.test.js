@@ -193,6 +193,69 @@ describe('Model', () => {
     })
   })
 
+  describe('#save() with options', () => {
+    beforeEach(() => {
+      Model.create('User', 'users', { id: Joi.string(), email: Joi.string().email().required(), name: Joi.string().required() }, {
+        create: [ 'email', 'name' ],
+        update: [ 'name' ]
+      })
+    })
+
+    it('should fail if the model is not valid', done => {
+      const User = GoCardless.model('User')
+      const data = { email: 'invalid' }
+      const user = new User(data)
+
+      user.save((err) => {
+        (err === null).should.be.false()
+        err.name.should.be.equal('ValidationError')
+        done()
+      })
+    })
+
+    it('should create a model if it does not have an ID', done => {
+      const User = GoCardless.model('User')
+      const spy = sinon.spy(GoCardless.client(), 'request')
+      const data = { email: 'valid@90tech.fr', 'name': '90Tech' }
+      const user = new User(data)
+
+      user.save((err) => {
+        (err === null).should.be.true()
+        spy.should.be.calledOnce()
+        spy.should.be.calledWith({
+          url: '/users',
+          method: 'POST',
+          json: {
+            users: data
+          }
+        })
+        spy.restore()
+        done()
+      })
+    })
+
+    it('should update a model if it has an ID', done => {
+      const User = GoCardless.model('User')
+      const spy = sinon.spy(GoCardless.client(), 'request')
+      const data = { id: 'US1', email: 'valid@90tech.fr', 'name': '90Tech' }
+      const user = new User(data)
+
+      user.save((err) => {
+        (err === null).should.be.true()
+        spy.should.be.calledOnce()
+        spy.should.be.calledWith({
+          url: '/users/US1',
+          method: 'PUT',
+          json: {
+            users: { name: '90Tech' }
+          }
+        })
+        spy.restore()
+        done()
+      })
+    })
+  })
+
   describe('#properties', () => {
     beforeEach(() => {
       Model.create('User', 'users', { id: Joi.string(), email: Joi.string().email().required() })
