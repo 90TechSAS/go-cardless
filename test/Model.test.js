@@ -61,6 +61,24 @@ describe('Model', () => {
       Model.create('Post', 'posts', { content: Joi.string().required() })
       GoCardless.model('Post').name.should.be.equal('Post')
     })
+
+    it('should support the creation of static methods', () => {
+      let User = Model.create('User', 'users', { email: Joi.string().email().required() }, {
+        statics: {
+          hello: () => 'world'
+        }
+      })
+      User.hello().should.be.equal('world')
+    })
+
+    it('should support the creation of methods', () => {
+      let User = Model.create('User', 'users', { email: Joi.string().email().required() }, {
+        methods: {
+          hello: function () { return `"${this.email}"` }
+        }
+      })
+      new User({ email: 'a@90tech.fr' }).hello().should.be.equal('"a@90tech.fr"')
+    })
   })
 
   describe('#validate()', () => {
