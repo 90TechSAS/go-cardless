@@ -5,8 +5,9 @@ const GoCardless = require('../../lib/index.js')
 const Mandate = GoCardless.model('Mandate')
 
 var template = {
-  reference: '90Tech',
-  scheme: 'sepa_core'
+  metadata: {
+    ref: '90Tech'
+  }
 }
 
 var customer = {
@@ -31,10 +32,6 @@ var mandate
 
 describe('models.Mandate', () => {
   before(function (done) {
-    if (!process.env.hasOwnProperty('TEST_PRO_FEATURES')) {
-      return this.skip()
-    }
-
     this.timeout(5000)
     GoCardless.client().post({
       url: '/customers',
@@ -80,18 +77,12 @@ describe('models.Mandate', () => {
     })
   })
 
-  beforeEach(function () {
-    if (!process.env.hasOwnProperty('TEST_PRO_FEATURES')) {
-      this.skip()
-    }
-  })
-
   describe('#get()', () => {
     it('should get a single Mandate', function (done) {
       this.timeout(5000)
       Mandate.get(mandate.id, (err, m) => {
         (err === null).should.be.true()
-        m.reference.should.be.equal('90Tech')
+        m.metadata.ref.should.be.equal('90Tech')
         done()
       })
     })
@@ -114,7 +105,7 @@ describe('models.Mandate', () => {
       let m = new Mandate(template)
       m.save((err, m) => {
         (err === null).should.be.true()
-        m.reference.should.be.equal('90Tech')
+        m.metadata.ref.should.be.equal('90Tech')
         done()
       })
     })
@@ -138,7 +129,7 @@ describe('models.Mandate', () => {
   describe('#validate', () => {
     it('should return the error if the object is not valid', done => {
       let m = new Mandate({
-        email: 'invalid'
+        id: 'invalid'
       })
 
       m.validate((err) => {
@@ -150,9 +141,7 @@ describe('models.Mandate', () => {
     it('should return an empty error if the model is valid', done => {
       let m = new Mandate({
         id: 'MD1',
-        created_at: new Date(),
-        reference: '90Tech',
-        scheme: 'sepa_core'
+        created_at: new Date()
       })
 
       m.validate((err) => {
